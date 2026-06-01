@@ -1,15 +1,15 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
+import { AppRouter } from './router/AppRouter';
+import { useAuthStore } from './store/auth.store';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Toaster position="top-right" />
-      <Routes>
-        <Route path="/" element={<div className="text-3xl font-bold">Hello World</div>} />
-      </Routes>
-    </BrowserRouter>
-  );
+export default function App() {
+  const { isAuthenticated, fetchProfile } = useAuthStore();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchProfile();
+    }
+  }, []);
+
+  return <AppRouter />;
 }
-
-export default App;
