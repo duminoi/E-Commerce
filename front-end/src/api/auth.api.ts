@@ -1,5 +1,5 @@
 import api from './axios.config';
-import { ApiResponse, User } from '../types/api.type';
+import type { ApiResponse, User } from '../types/api.type';
 
 export const authApi = {
   register: (data: { email: string; password: string; fullName: string }) =>

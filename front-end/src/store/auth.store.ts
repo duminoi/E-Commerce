@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { User } from '../types/api.type';
+import type { User } from '../types/api.type';
 import { authApi } from '../api/auth.api';
 
 interface AuthState {
@@ -14,7 +14,7 @@ interface AuthState {
   setUser: (user: User | null) => void;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: !!localStorage.getItem('accessToken'),
   isLoading: false,
