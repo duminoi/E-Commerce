@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { UserModule } from './modules/user/user.module';
+import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
 import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
@@ -43,6 +44,10 @@ import appConfig from './config/app.config';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
     },
   ],
 })
