@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { UserModule } from './modules/user/user.module';
 
 import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
@@ -36,6 +37,7 @@ import appConfig from './config/app.config';
         limit: 100,
       },
     ]),
+    UserModule,
   ],
   providers: [
     {
