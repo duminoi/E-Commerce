@@ -13,24 +13,24 @@ export class OrderItem {
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @Column({ name: 'product_id', nullable: true })
-  productId: string;
+  @Column({ name: 'product_id', type: 'varchar', nullable: true })
+  productId: string | null;
 
-  @Column({ name: 'variant_id', nullable: true })
+  @Column({ name: 'variant_id', type: 'varchar', nullable: true })
   variantId: string | null;
 
-  @Column({ name: 'product_name' })
+  @Column({ name: 'product_name', type: 'varchar' })
   productName: string;
 
-  @Column({ name: 'product_image', nullable: true })
+  @Column({ name: 'product_image', type: 'varchar', nullable: true })
   productImage: string | null;
 
-  @Column({ name: 'variant_name', nullable: true })
+  @Column({ name: 'variant_name', type: 'varchar', nullable: true })
   variantName: string | null;
 
   @Column({ type: 'decimal', precision: 12, scale: 2 })
   price: number;
 
-  @Column()
+  @Column({ type: 'int' })
   quantity: number;
 }

@@ -18,7 +18,7 @@ export class Review {
   @ManyToOne(() => Order, { onDelete: 'SET NULL', nullable: true }) @JoinColumn({ name: 'order_id' }) order: Order;
 
   @Column({ type: 'int' }) rating: number;
-  @Column({ nullable: true }) comment: string;
+  @Column({ type: 'varchar', nullable: true }) comment: string | null;
 
   @CreateDateColumn({ name: 'created_at' }) createdAt: Date;
   @UpdateDateColumn({ name: 'updated_at' }) updatedAt: Date;

@@ -34,7 +34,7 @@ export class Order {
   @Column({ type: 'jsonb', nullable: true })
   addressSnapshot: any;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   note: string | null;
 
   @Column({ name: 'paid_at', type: 'timestamp', nullable: true })
@@ -49,7 +49,7 @@ export class Order {
   @Column({ name: 'cancelled_at', type: 'timestamp', nullable: true })
   cancelledAt: Date;
 
-  @Column({ name: 'cancel_reason', nullable: true })
+  @Column({ name: 'cancel_reason', type: 'varchar', nullable: true })
   cancelReason: string | null;
 
   @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
