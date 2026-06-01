@@ -2,4 +2,12 @@ node_modules/
 dist/
 uploads/
 .env
+.env.*.local
 *.log
+*.tsbuildinfo
+coverage/
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+*.swp
