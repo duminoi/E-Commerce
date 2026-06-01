@@ -13,6 +13,7 @@ import { OrderModule } from './modules/order/order.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { ReviewModule } from './modules/review/review.module';
+import { ChatModule } from './modules/chat/chat.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
@@ -58,6 +59,7 @@ import appConfig from './config/app.config';
     DashboardModule,
     PaymentModule,
     ReviewModule,
+    ChatModule,
   ],
   providers: [
     {
