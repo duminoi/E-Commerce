@@ -11,3 +11,8 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Logs
+logs.txt
+logs_err.txt
+server.log
