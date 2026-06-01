@@ -24,7 +24,7 @@ export class UserService {
   }
 
   async create(data: Partial<User>): Promise<User> {
-    const existingUser = await this.findByEmail(data.email);
+    const existingUser = await this.findByEmail(data.email!);
     if (existingUser) {
       throw new ConflictException('Email đã tồn tại');
     }
