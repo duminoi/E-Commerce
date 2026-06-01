@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like, Between } from 'typeorm';
+import slugify from 'slugify';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -78,7 +79,7 @@ export class ProductService {
   }
 
   async create(dto: CreateProductDto): Promise<Product> {
-    const slug = dto.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const slug = slugify(dto.name, { lower: true, strict: true, locale: 'vi' });
     const product = this.repo.create({ ...dto, slug });
     return this.repo.save(product);
   }

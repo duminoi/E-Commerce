@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import slugify from 'slugify';
 import { Category } from './entities/category.entity';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -28,7 +29,7 @@ export class CategoryService {
   }
 
   async create(dto: CreateCategoryDto): Promise<Category> {
-    const slug = dto.slug || dto.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const slug = dto.slug || slugify(dto.name, { lower: true, strict: true, locale: 'vi' });
     const category = this.repo.create({ ...dto, slug });
     return this.repo.save(category);
   }
@@ -38,7 +39,7 @@ export class CategoryService {
     if (!category) throw new NotFoundException('Không tìm thấy danh mục');
     Object.assign(category, dto);
     if (dto.name && !dto.slug) {
-      category.slug = dto.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      category.slug = slugify(dto.name, { lower: true, strict: true, locale: 'vi' });
     }
     return this.repo.save(category);
   }
