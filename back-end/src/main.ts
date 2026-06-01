@@ -3,11 +3,21 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
 import { AppModule } from './app.module';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const logger = WinstonModule.createLogger({
+    transports: [
+      new winston.transports.Console({ format: winston.format.combine(winston.format.timestamp(), winston.format.json()) }),
+      new winston.transports.File({ filename: 'logs/error.log', level: 'error', dirname: 'logs' }),
+      new winston.transports.File({ filename: 'logs/combined.log', dirname: 'logs' }),
+    ],
+  });
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger });
 
   app.setGlobalPrefix('api');
 
