@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, IsNull } from 'typeorm';
 import { Cart } from './entities/cart.entity';
 import { CartItem } from './entities/cart-item.entity';
 import { AddToCartDto, UpdateCartItemDto } from './dto/cart-item.dto';
@@ -43,9 +43,14 @@ export class CartService {
       cart = await this.cartRepo.save({ user: { id: userId } as any });
     }
 
-    const existingItem = await this.itemRepo.findOne({
-      where: { cartId: cart.id, productId: dto.productId, variantId: dto.variantId || undefined },
-    });
+    const whereClause: any = { cartId: cart.id, productId: dto.productId };
+    if (dto.variantId) {
+      whereClause.variantId = dto.variantId;
+    } else {
+      whereClause.variantId = IsNull();
+    }
+
+    const existingItem = await this.itemRepo.findOne({ where: whereClause });
 
     if (existingItem) {
       existingItem.quantity += dto.quantity;
@@ -54,7 +59,7 @@ export class CartService {
       await this.itemRepo.save({
         cartId: cart.id,
         productId: dto.productId,
-        variantId: dto.variantId || undefined,
+        variantId: dto.variantId || null,
         quantity: dto.quantity,
       });
     }

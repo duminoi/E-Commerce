@@ -23,8 +23,8 @@ export class CartItem {
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
-  @Column({ name: 'variant_id', nullable: true })
-  variantId: string;
+  @Column({ name: 'variant_id', type: 'varchar', nullable: true })
+  variantId: string | null;
 
   @ManyToOne(() => ProductVariant, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'variant_id' })
