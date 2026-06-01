@@ -6,6 +6,8 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { HomePage } from '../pages/home/HomePage';
 import { LoginPage } from '../pages/auth/LoginPage';
 import { RegisterPage } from '../pages/auth/RegisterPage';
+import { ProductListPage } from '../pages/products/ProductListPage';
+import { ProductDetailPage } from '../pages/products/ProductDetailPage';
 
 export function AppRouter() {
   return (
@@ -17,6 +19,9 @@ export function AppRouter() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+
+            <Route path="/products" element={<ProductListPage />} />
+            <Route path="/products/:slug" element={<ProductDetailPage />} />
 
             <Route element={<ProtectedRoute />}>
               {/* Placeholder for cart, orders, profile */}
