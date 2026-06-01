@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { productApi } from '../../api/product.api';
+import { cartApi } from '../../api/cart.api';
 import type { Product } from '../../types/product.type';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { Button } from '../../components/ui/Button';
+import { showToast } from '../../components/ui/Toast';
 
 export function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -44,9 +46,18 @@ export function ProductDetailPage() {
   const images = product.images?.sort((a, b) => a.sortOrder - b.sortOrder) || [];
   const discount = product.comparePrice ? Math.round((1 - product.price / product.comparePrice) * 100) : 0;
 
-  const handleAddToCart = () => {
-    // TODO: implement in Phase 3 (Cart)
-    alert('Thêm vào giỏ hàng — sẽ được triển khai ở giai đoạn 3');
+  const handleAddToCart = async () => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      showToast.error('Vui lòng đăng nhập để thêm vào giỏ hàng');
+      return;
+    }
+    try {
+      await cartApi.addItem({ productId: product.id, variantId: selectedVariant || undefined, quantity: 1 });
+      showToast.success('Đã thêm vào giỏ hàng');
+    } catch (err: any) {
+      showToast.error(err.response?.data?.message || 'Thêm vào giỏ hàng thất bại');
+    }
   };
 
   return (
