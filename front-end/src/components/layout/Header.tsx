@@ -1,11 +1,15 @@
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth.store';
+import { useCartStore } from '../../store/cart.store';
 import { Button } from '../ui/Button';
 import { ROUTES } from '../../utils/constants';
 
 export function Header() {
   const { user, isAuthenticated, logout } = useAuthStore();
+  const { itemCount, fetchCart } = useCartStore();
   const navigate = useNavigate();
+  useEffect(() => { if (isAuthenticated) fetchCart(); }, [isAuthenticated]);
 
   const handleLogout = async () => {
     await logout();
@@ -28,8 +32,13 @@ export function Header() {
                     Quản trị
                   </Link>
                 )}
-                <Link to={ROUTES.CART} className="text-gray-600 hover:text-blue-600">
+                <Link to={ROUTES.CART} className="text-gray-600 hover:text-blue-600 relative">
                   Giỏ hàng
+                  {itemCount > 0 && (
+                    <span className="absolute -top-2 -right-4 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                      {itemCount > 99 ? '99+' : itemCount}
+                    </span>
+                  )}
                 </Link>
                 <Link to={ROUTES.ORDERS} className="text-gray-600 hover:text-blue-600">
                   Đơn hàng

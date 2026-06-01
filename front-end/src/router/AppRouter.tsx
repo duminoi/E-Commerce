@@ -8,6 +8,10 @@ import { LoginPage } from '../pages/auth/LoginPage';
 import { RegisterPage } from '../pages/auth/RegisterPage';
 import { ProductListPage } from '../pages/products/ProductListPage';
 import { ProductDetailPage } from '../pages/products/ProductDetailPage';
+import { CartPage } from '../pages/cart/CartPage';
+import { CheckoutPage } from '../pages/checkout/CheckoutPage';
+import { OrdersPage } from '../pages/user/OrdersPage';
+import { OrderDetailPage } from '../pages/user/OrderDetailPage';
 
 export function AppRouter() {
   return (
@@ -24,7 +28,10 @@ export function AppRouter() {
             <Route path="/products/:slug" element={<ProductDetailPage />} />
 
             <Route element={<ProtectedRoute />}>
-              {/* Placeholder for cart, orders, profile */}
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/orders/:id" element={<OrderDetailPage />} />
             </Route>
           </Routes>
         </main>
