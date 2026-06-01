@@ -18,5 +18,6 @@ import { ProductVariant } from '../product/entities/product-variant.entity';
   ],
   controllers: [OrderController, AdminOrderController],
   providers: [OrderService],
+  exports: [OrderService],
 })
 export class OrderModule {}
