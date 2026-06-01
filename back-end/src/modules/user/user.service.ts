@@ -12,7 +12,7 @@ export class UserService {
   ) {}
 
   async findById(id: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
+    const user = await this.userRepository.findOne({ where: { id }, relations: { addresses: true } });
     if (!user) {
       throw new NotFoundException('Không tìm thấy người dùng');
     }
