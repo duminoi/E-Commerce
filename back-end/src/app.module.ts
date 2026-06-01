@@ -12,6 +12,7 @@ import { CartModule } from './modules/cart/cart.module';
 import { OrderModule } from './modules/order/order.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { PaymentModule } from './modules/payment/payment.module';
+import { ReviewModule } from './modules/review/review.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
@@ -56,6 +57,7 @@ import appConfig from './config/app.config';
     OrderModule,
     DashboardModule,
     PaymentModule,
+    ReviewModule,
   ],
   providers: [
     {
