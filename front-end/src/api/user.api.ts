@@ -1,4 +1,4 @@
-import api from './axios.config';
+﻿import api from './axios.config';
 import type { ApiResponse } from '../types/api.type';
 
 export const userApi = {
@@ -8,4 +8,5 @@ export const userApi = {
   createAddress: (data: any) => api.post('/users/addresses', data),
   updateAddress: (id: string, data: any) => api.patch(`/users/addresses/${id}`, data),
   deleteAddress: (id: string) => api.delete(`/users/addresses/${id}`),
+  setDefaultAddress: (id: string) => api.patch(`/users/addresses/${id}/default`),
 };

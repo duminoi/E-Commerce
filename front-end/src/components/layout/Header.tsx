@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth.store';
 import { useCartStore } from '../../store/cart.store';
@@ -32,6 +32,9 @@ export function Header() {
                     Quản trị
                   </Link>
                 )}
+                <Link to={ROUTES.CHAT} className="text-gray-600 hover:text-blue-600">
+                  Chat
+                </Link>
                 <Link to={ROUTES.CART} className="text-gray-600 hover:text-blue-600 relative">
                   Giỏ hàng
                   {itemCount > 0 && (

@@ -80,4 +80,4 @@ import appConfig from './config/app.config';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
