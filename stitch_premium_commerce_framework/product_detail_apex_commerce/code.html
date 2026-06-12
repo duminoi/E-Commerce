@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Detail - Apex Commerce</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#007e37",
+                      "on-surface-variant": "#434655",
+                      "tertiary": "#006229",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-container": "#684000",
+                      "secondary": "#855300",
+                      "on-primary-fixed": "#00174b",
+                      "surface-container-low": "#f2f3ff",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "primary-container": "#2563eb",
+                      "on-tertiary-fixed-variant": "#005321",
+                      "surface-container": "#eaedff",
+                      "surface-container-highest": "#dae2fd",
+                      "tertiary-fixed": "#6bff8f",
+                      "surface-container-high": "#e2e7ff",
+                      "on-primary": "#ffffff",
+                      "secondary-container": "#fea619",
+                      "surface-variant": "#dae2fd",
+                      "on-primary-container": "#eeefff",
+                      "on-background": "#131b2e",
+                      "on-secondary-fixed": "#2a1700",
+                      "inverse-on-surface": "#eef0ff",
+                      "primary-fixed": "#dbe1ff",
+                      "surface-bright": "#faf8ff",
+                      "on-tertiary-container": "#c1ffc5",
+                      "on-secondary-fixed-variant": "#653e00",
+                      "secondary-fixed-dim": "#ffb95f",
+                      "inverse-surface": "#283044",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#002109",
+                      "on-tertiary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#ffddb8",
+                      "primary": "#004ac6",
+                      "tertiary-fixed-dim": "#4ae176",
+                      "outline": "#737686",
+                      "surface-dim": "#d2d9f4",
+                      "on-surface": "#131b2e",
+                      "background": "#faf8ff",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "inverse-primary": "#b4c5ff",
+                      "surface-tint": "#0053db",
+                      "surface": "#faf8ff",
+                      "outline-variant": "#c3c6d7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "3xl": "64px",
+                      "md": "16px",
+                      "xl": "32px",
+                      "lg": "24px",
+                      "gutter": "24px",
+                      "xs": "4px",
+                      "base": "8px",
+                      "max_width": "1440px",
+                      "2xl": "48px",
+                      "content_width": "1280px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "h2": [
+                              "Geist"
+                      ],
+                      "label-md": [
+                              "Geist"
+                      ],
+                      "h1": [
+                              "Geist"
+                      ],
+                      "hero-mobile": [
+                              "Geist"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Geist"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "hero": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "h2": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "h1": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "hero-mobile": [
+                              "40px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h3": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "caption": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "hero": [
+                              "64px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .hide-scroll {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased pt-[72px]">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full h-[72px] z-50 bg-surface/80 backdrop-blur-xl dark:bg-on-background/80 shadow-sm border-b-0 shadow-[0px_4px_20px_rgba(15,23,42,0.05)]">
+<div class="flex items-center justify-between px-gutter max-w-max_width mx-auto w-full h-full">
+<div class="flex items-center gap-lg">
+<a class="font-h3 text-h3 font-bold tracking-tighter text-on-surface dark:text-surface-bright" href="#">LUXE</a>
+<nav class="hidden md:flex items-center gap-md ml-xl">
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-on-surface-variant/10 transition-all duration-200 px-3 py-2 rounded-md font-body-md text-body-md" href="#">Electronics</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-on-surface-variant/10 transition-all duration-200 px-3 py-2 rounded-md font-body-md text-body-md" href="#">Fashion</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-on-surface-variant/10 transition-all duration-200 px-3 py-2 rounded-md font-body-md text-body-md" href="#">Furniture</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-on-surface-variant/10 transition-all duration-200 px-3 py-2 rounded-md font-body-md text-body-md" href="#">Accessories</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-on-surface-variant/10 transition-all duration-200 px-3 py-2 rounded-md font-body-md text-body-md" href="#">Sale</a>
+</nav>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-on-surface-variant/10 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-on-surface-variant/10 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-on-surface-variant/10 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-surface-container-low dark:hover:bg-on-surface-variant/10 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-content_width mx-auto px-gutter py-xl md:py-3xl">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 font-caption text-caption text-on-surface-variant mb-lg opacity-70">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span>/</span>
+<a class="hover:text-primary transition-colors" href="#">Electronics</a>
+<span>/</span>
+<span class="text-on-surface font-medium">Apex Pro Wireless Headphones</span>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl lg:gap-3xl">
+<!-- Left: Gallery -->
+<div class="lg:col-span-7 flex flex-col-reverse md:flex-row gap-md">
+<!-- Thumbnails -->
+<div class="flex md:flex-col gap-sm overflow-x-auto hide-scroll md:w-20 shrink-0">
+<button class="w-20 h-20 rounded-lg border-2 border-primary overflow-hidden shrink-0">
+<img alt="Headphones Thumbnail 1" class="w-full h-full object-cover" data-alt="A sleek pair of high-end wireless over-ear headphones resting on a minimalist white surface. The lighting is studio-quality, casting soft shadows that highlight the matte black finish and metallic accents of the headphones. The aesthetic is clean, modern, and premium, perfect for a high-end e-commerce product gallery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzxFKI-JkRwhXK-aD3Zwmitdf_wUQ3ukgFraBYLAh_CLR5w6jTK8RHFiZ5BeLGgwNkumPGeF07BgyyDXh9YL5OqsxEUZbHARB0SEdfg31JG9Kdp3fLSSJfZSdmCJmU4ZyHCTs-sn1ovrt7A_Z8sNxgLMvfYKJ1KICK6S6ky5BvspWND02dxUYJA86XHTWN1eMGD-DhnW3UZC4xDbm7CtA9m9_4jnTr-n_22Og1mVj2F5fLxd68cQScekXdif9WmNnL04j289XymaBS"/>
+</button>
+<button class="w-20 h-20 rounded-lg border border-outline-variant overflow-hidden shrink-0 opacity-70 hover:opacity-100 transition-opacity">
+<img alt="Headphones Thumbnail 2" class="w-full h-full object-cover" data-alt="Detailed close-up shot of the ear pad and headband of premium wireless headphones. The texture of the memory foam and synthetic leather is highly visible under crisp, even lighting. The background is a soft, neutral grey, emphasizing the craftsmanship and luxurious feel of the product." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1IL8VC7gdTLokthW2YzzFBWjBS1-1AfEXFs94q8me41wbPcOiEgah3wSGn2PyNadk-Pc6bzppjjZHM7LvcvGYT5eCXJtGfN60JCsEonkYuqvQBL03ZwzvcM0kiCV5p46EUBPaPfuWCpaNpRqSB0i1EpeYc3sT8joykxP53RgKNsf17NDwOLLnUL9omz9wgFoYam-qJBhYpQEKq-U3DSRK0NPL-WGQbBSgew1Cq5fY48NwvPYGJ7OFppkPEO2K3SJKX4gnxyif1nDf"/>
+</button>
+<button class="w-20 h-20 rounded-lg border border-outline-variant overflow-hidden shrink-0 opacity-70 hover:opacity-100 transition-opacity">
+<img alt="Headphones Thumbnail 3" class="w-full h-full object-cover" data-alt="Lifestyle product shot showing premium matte black wireless headphones folded neatly next to a sleek modern smartphone on a light wood desk. Soft natural sunlight streams in from a nearby window, creating a warm, inviting, and sophisticated atmosphere suitable for a tech luxury brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_7Ui5PUMZH10gWQfHP7k_sKE6PvxxjdfAUNElmZTcI4dHjHJGaOC4XE0mrK_-yrJYfVH3cZlRLRdrLWxpszI8YwarmaNDToND4JSX0RRdfozz5bu3XIcNiveKSbyd6WBfxm5NdOF7voM-yYbAOJETBvTj4AtotBjHtoUZHTyYaBfPblAVhBLGDZuipPDdHnbsVeykZGxDvPQDeQr3vabqczWouzGIt4532eQkskMFjZMDjgZJS_4wMqfp2762FLczxHu2eg_kL8jz"/>
+</button>
+</div>
+<!-- Main Image -->
+<div class="flex-grow bg-surface rounded-xl overflow-hidden shadow-[0px_4px_20px_rgba(15,23,42,0.05)] relative group cursor-zoom-in">
+<img alt="Apex Pro Wireless Headphones" class="w-full h-auto aspect-square object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A striking, high-resolution product shot of premium matte black wireless over-ear headphones floating elegantly against a pristine white background. The studio lighting is meticulously calibrated to showcase the subtle metallic branding and the plush texture of the ear cushions. The overall aesthetic is minimalist, authoritative, and effortlessly sophisticated, aligning with a high-end tech commerce experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtrLIMzcN6_9Z5yX6oLNvtimnk0JlJe5zNj7eIhnjCmC_TyUQtcmriKAKs7hFRrr_jO3PgLOAkEMmjjhC8DAF33gSoLwAnsXBdlbo1i0CvWwrkLdHLzCcG_HMO_4ClqTtOsB6u3AKfbeK5BYO_ZG8G_Yq5e4k9_KjE707wz1WUA8lfEyH1l2P2Ou7USdCxxnEXyrfYJeMLoOsVb68XiTt15Snk73TmZdB7KA6S1qYGFOwxU--7P3MwxYGl9YvxIvPJ6_dHxc6wfJbK"/>
+<button class="absolute top-4 right-4 p-2 bg-surface/80 backdrop-blur-md rounded-full text-on-surface hover:text-primary transition-colors shadow-sm">
+<span class="material-symbols-outlined">fullscreen</span>
+</button>
+</div>
+</div>
+<!-- Right: Product Details -->
+<div class="lg:col-span-5 flex flex-col gap-lg">
+<!-- Title & Reviews -->
+<div class="flex flex-col gap-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase">New Release</span>
+<div class="flex items-center gap-1 text-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined">star_half</span>
+<span class="font-caption text-caption text-on-surface-variant ml-2">(128 Reviews)</span>
+</div>
+</div>
+<h1 class="font-h1 text-h1 font-bold text-on-surface tracking-tight">Apex Pro Wireless Headphones</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">Experience unparalleled audio fidelity with active noise cancellation and 40-hour battery life.</p>
+</div>
+<!-- Price -->
+<div class="flex items-end gap-md border-b border-outline-variant/30 pb-lg">
+<span class="font-h2 text-h2 font-semibold text-on-surface">$299.00</span>
+<span class="font-body-lg text-body-lg text-on-surface-variant line-through mb-1">$349.00</span>
+<span class="bg-error/10 text-error font-label-md text-label-md px-2 py-1 rounded mb-1">Save $50</span>
+</div>
+<!-- Selectors -->
+<div class="flex flex-col gap-md">
+<!-- Color -->
+<div>
+<span class="font-label-md text-label-md text-on-surface block mb-2">Color: <span class="font-medium">Matte Black</span></span>
+<div class="flex gap-3">
+<button class="w-10 h-10 rounded-full bg-gray-900 border-2 border-primary ring-2 ring-primary/20 transition-all"></button>
+<button class="w-10 h-10 rounded-full bg-gray-300 border border-outline-variant hover:border-primary transition-all"></button>
+<button class="w-10 h-10 rounded-full bg-blue-900 border border-outline-variant hover:border-primary transition-all"></button>
+</div>
+</div>
+<!-- Stock Status & Delivery -->
+<div class="bg-surface-container-low rounded-lg p-md flex flex-col gap-sm mt-2">
+<div class="flex items-center gap-2 text-tertiary-container font-medium">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            In Stock
+                        </div>
+<div class="flex items-center gap-2 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined">local_shipping</span>
+                            Free delivery by <span class="font-semibold text-on-surface">Wed, Oct 25</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-md mt-4">
+<button class="flex-1 bg-primary-container text-on-primary font-label-md text-label-md py-4 rounded-xl hover:bg-blue-700 transition-colors active:scale-98 shadow-[0px_12px_32px_rgba(37,99,235,0.2)] flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">shopping_cart</span>
+                        Add to Cart
+                    </button>
+<button class="flex-1 bg-surface text-on-surface border border-outline-variant font-label-md text-label-md py-4 rounded-xl hover:bg-surface-container-low transition-colors active:scale-98 flex items-center justify-center">
+                        Buy Now
+                    </button>
+</div>
+<!-- Trust Badges -->
+<div class="flex items-center justify-between py-md border-t border-outline-variant/30 mt-2">
+<div class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-caption text-caption text-xs">2 Year Warranty</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">sync</span>
+<span class="font-caption text-caption text-xs">30-Day Returns</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-caption text-caption text-xs">Secure Checkout</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Information Tabs -->
+<div class="mt-3xl pt-xl border-t border-outline-variant/30">
+<div class="flex gap-xl border-b border-outline-variant/30 mb-lg">
+<button class="font-label-md text-label-md text-primary border-b-2 border-primary pb-sm transition-colors">Description</button>
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-sm transition-colors">Specifications</button>
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-primary pb-sm transition-colors">Reviews (128)</button>
+</div>
+<div class="max-w-3xl font-body-md text-body-md text-on-surface-variant leading-relaxed space-y-md">
+<p>Engineered for the discerning audiophile, the Apex Pro Wireless Headphones deliver a soundscape of stunning clarity and depth. Featuring custom-tuned 40mm drivers and state-of-the-art active noise cancellation (ANC), these headphones immerse you in your music while completely silencing the outside world.</p>
+<p>The ergonomic design utilizes memory foam ear cushions wrapped in premium synthetic leather, ensuring comfort during extended listening sessions. With up to 40 hours of battery life on a single charge and quick-charge capabilities, the Apex Pro is your ultimate daily companion.</p>
+<ul class="list-disc pl-5 mt-md space-y-2">
+<li>Custom 40mm dynamic drivers for high-fidelity audio.</li>
+<li>Advanced Active Noise Cancellation with Transparency Mode.</li>
+<li>Up to 40 hours of continuous playback (ANC on).</li>
+<li>Bluetooth 5.3 for a stable, low-latency connection.</li>
+<li>Multi-point connectivity to seamlessly switch between devices.</li>
+</ul>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-on-background w-full py-xl border-t border-outline-variant dark:border-on-surface-variant flat no shadows mt-3xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg px-gutter max-w-content_width mx-auto">
+<div class="flex flex-col gap-md">
+<span class="font-h3 text-h3 font-bold text-on-surface dark:text-surface-bright">LUXE</span>
+<p class="font-caption text-caption text-on-surface-variant dark:text-outline-variant">Premium commerce experiences for the modern era.</p>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-label-md text-label-md font-bold text-primary dark:text-primary-fixed mb-2">Company</span>
+<a class="font-caption text-caption text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">About Us</a>
+<a class="font-caption text-caption text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-label-md text-label-md font-bold text-primary dark:text-primary-fixed mb-2">Support</span>
+<a class="font-caption text-caption text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Shipping Policy</a>
+<a class="font-caption text-caption text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Returns</a>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-label-md text-label-md font-bold text-primary dark:text-primary-fixed mb-2">Legal</span>
+<a class="font-caption text-caption text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-caption text-caption text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed hover:underline transition-all opacity-80 hover:opacity-100" href="#">Terms</a>
+</div>
+</div>
+<div class="text-center mt-xl pt-lg border-t border-outline-variant/20 font-caption text-caption text-on-surface-variant dark:text-outline-variant">
+            © 2024 LUXE Premium Commerce. All rights reserved.
+        </div>
+</footer>
+<!-- Sticky Bottom Bar (Mobile/Scroll) -->
+<div class="fixed bottom-0 left-0 w-full glass-panel border-t border-outline-variant/30 py-md px-gutter md:hidden z-40 transform transition-transform translate-y-0" id="sticky-cart">
+<div class="flex items-center justify-between gap-md max-w-content_width mx-auto">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">$299.00</span>
+<span class="font-caption text-caption text-primary">In Stock</span>
+</div>
+<button class="bg-primary-container text-on-primary font-label-md text-label-md py-3 px-xl rounded-xl hover:bg-blue-700 transition-colors active:scale-98 shadow-[0px_4px_20px_rgba(37,99,235,0.2)]">
+                Add to Cart
+            </button>
+</div>
+</div>
+</body></html>

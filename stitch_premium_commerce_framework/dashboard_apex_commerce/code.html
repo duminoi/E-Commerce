@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apex Commerce - User Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#007e37",
+                        "on-surface-variant": "#434655",
+                        "tertiary": "#006229",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#684000",
+                        "secondary": "#855300",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-low": "#f2f3ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "primary-container": "#2563eb",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "surface-container": "#eaedff",
+                        "surface-container-highest": "#dae2fd",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-high": "#e2e7ff",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#fea619",
+                        "surface-variant": "#dae2fd",
+                        "on-primary-container": "#eeefff",
+                        "on-background": "#131b2e",
+                        "on-secondary-fixed": "#2a1700",
+                        "inverse-on-surface": "#eef0ff",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-bright": "#faf8ff",
+                        "on-tertiary-container": "#c1ffc5",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "secondary-fixed-dim": "#ffb95f",
+                        "inverse-surface": "#283044",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#002109",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#ffddb8",
+                        "primary": "#004ac6",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "outline": "#737686",
+                        "surface-dim": "#d2d9f4",
+                        "on-surface": "#131b2e",
+                        "background": "#faf8ff",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-tint": "#0053db",
+                        "surface": "#faf8ff",
+                        "outline-variant": "#c3c6d7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "3xl": "64px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "base": "8px",
+                        "max_width": "1440px",
+                        "2xl": "48px",
+                        "content_width": "1280px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Geist"],
+                        "label-md": ["Geist"],
+                        "h1": ["Geist"],
+                        "hero-mobile": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Geist"],
+                        "caption": ["Inter"],
+                        "hero": ["Geist"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "h1": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "hero-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "h3": ["28px", { "lineHeight": "36px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "caption": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "hero": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased pt-[72px]">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full h-[72px] z-50 bg-surface/80 backdrop-blur-xl shadow-sm">
+<div class="flex items-center justify-between px-gutter max-w-max_width mx-auto w-full h-full">
+<div class="flex items-center gap-lg">
+<a class="font-h3 text-h3 font-bold tracking-tighter text-on-surface" href="#">LUXE</a>
+<!-- Desktop Nav -->
+<div class="hidden md:flex items-center gap-lg ml-xl">
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-3 py-2 rounded-md active:scale-95 transition-transform font-body-md text-body-md" href="#">Electronics</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-3 py-2 rounded-md active:scale-95 transition-transform font-body-md text-body-md" href="#">Fashion</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-3 py-2 rounded-md active:scale-95 transition-transform font-body-md text-body-md" href="#">Furniture</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-3 py-2 rounded-md active:scale-95 transition-transform font-body-md text-body-md" href="#">Accessories</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low px-3 py-2 rounded-md active:scale-95 transition-transform font-body-md text-body-md" href="#">Sale</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-full active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-full active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shopping_cart</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-full active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="p-2 text-primary border-b-2 border-primary pb-1 hover:bg-surface-container-low rounded-full active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow max-w-content_width mx-auto w-full px-gutter py-2xl flex flex-col md:flex-row gap-xl">
+<!-- Sidebar Navigation (User Dashboard specific) -->
+<aside class="w-full md:w-64 flex-shrink-0">
+<div class="glass-panel rounded-xl p-md shadow-[0px_4px_20px_rgba(15,23,42,0.05)] sticky top-[104px]">
+<div class="flex items-center gap-md mb-lg p-sm">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-outline">person</span>
+</div>
+<div>
+<h2 class="font-label-md text-label-md text-on-surface">Alex Morgan</h2>
+<p class="font-caption text-caption text-on-surface-variant">alex.m@example.com</p>
+</div>
+</div>
+<nav class="flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm rounded-lg bg-surface-container-low text-primary font-label-md text-label-md transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                        Overview
+                    </a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_shipping</span>
+                        Orders
+                    </a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+                        Profile
+                    </a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">location_on</span>
+                        Addresses
+                    </a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+                        Wishlist
+                    </a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-lowest hover:text-primary transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+                        Settings
+                    </a>
+</nav>
+</div>
+</aside>
+<!-- Dashboard Canvas -->
+<div class="flex-grow flex flex-col gap-xl">
+<header class="mb-md">
+<h1 class="font-h2 text-h2 text-on-surface">Dashboard Overview</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-sm">Welcome back, Alex. Here's what's happening with your account.</p>
+</header>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="glass-panel rounded-[20px] p-lg shadow-[0px_4px_20px_rgba(15,23,42,0.05)] flex flex-col justify-between hover:shadow-[0px_12px_32px_rgba(15,23,42,0.12)] transition-shadow duration-300">
+<div class="flex items-center justify-between mb-lg">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Orders</span>
+<div class="p-2 bg-surface-container-highest rounded-full text-primary">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+</div>
+<div class="font-h1 text-h1 text-on-surface">24</div>
+</div>
+<div class="glass-panel rounded-[20px] p-lg shadow-[0px_4px_20px_rgba(15,23,42,0.05)] flex flex-col justify-between hover:shadow-[0px_12px_32px_rgba(15,23,42,0.12)] transition-shadow duration-300">
+<div class="flex items-center justify-between mb-lg">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Wishlist Items</span>
+<div class="p-2 bg-surface-container-highest rounded-full text-primary">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+</div>
+<div class="font-h1 text-h1 text-on-surface">12</div>
+</div>
+<div class="glass-panel rounded-[20px] p-lg shadow-[0px_4px_20px_rgba(15,23,42,0.05)] flex flex-col justify-between hover:shadow-[0px_12px_32px_rgba(15,23,42,0.12)] transition-shadow duration-300 bg-gradient-to-br from-surface-container-low to-surface-container-highest border-none">
+<div class="flex items-center justify-between mb-lg">
+<span class="font-label-md text-label-md text-primary uppercase tracking-wider">Apex Rewards</span>
+<div class="p-2 bg-white/50 rounded-full text-primary">
+<span class="material-symbols-outlined">star</span>
+</div>
+</div>
+<div>
+<div class="font-h2 text-h2 text-primary">Gold Tier</div>
+<p class="font-caption text-caption text-on-surface-variant mt-xs">1,250 pts to Platinum</p>
+</div>
+</div>
+</div>
+<!-- Recent Orders Section -->
+<section class="glass-panel rounded-[20px] shadow-[0px_4px_20px_rgba(15,23,42,0.05)] overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<h2 class="font-h3 text-h3 text-on-surface">Recent Orders</h2>
+<a class="font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant transition-colors flex items-center gap-xs" href="#">
+                        View All <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+<div class="flex flex-col">
+<!-- Order Item 1 -->
+<div class="p-lg border-b border-outline-variant/50 hover:bg-surface-container-lowest transition-colors flex flex-col md:flex-row gap-lg items-start md:items-center justify-between last:border-0">
+<div class="flex items-center gap-md">
+<div class="w-20 h-20 rounded-lg overflow-hidden bg-surface-variant flex-shrink-0">
+<img alt="Product Image" class="w-full h-full object-cover" data-alt="A sleek, modern smart watch with a white minimalist band, resting on a clean light grey surface. The lighting is soft and high-key, emphasizing the premium quality and smooth textures of the device. The composition is centered and balanced, reflecting a contemporary, high-end e-commerce aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAojjbTMoTjHGMY1APvhfTlpHPpnFWrCmXA87bOZLVX6-Jn1ife-pOfLeisKTbz_bJH6EbU2v1IEwN8VdA30phc0QoOuwasaRSY_L_VX17YYHG9jppBt-QwclN6k4tuGt_dPVNgv0K10Wk2JKgUr2QgyIE1k4DIMXoD6AGXL5YcJl-W69U-W2z1mrxYaFp7Mm9nRZtZ4-ysYIkC65DEg7ExmmzJ0OmVPuphHBmaI1QaPaq-GQlI4PnhYheeuRjTrxz_xTcSk94djyPD"/>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface">Lumina Smart Watch - Series 4</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-xs">Order #ORD-2024-8921 • Placed Oct 12, 2024</p>
+<p class="font-label-md text-label-md text-on-surface mt-sm">$299.00</p>
+</div>
+</div>
+<div class="flex flex-col items-start md:items-end w-full md:w-auto mt-md md:mt-0">
+<div class="inline-flex items-center gap-xs px-3 py-1 rounded-full bg-tertiary/10 text-tertiary mb-sm">
+<span class="material-symbols-outlined text-[16px]">local_shipping</span>
+<span class="font-caption text-caption font-medium">Shipped</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">Estimated delivery: Oct 15</p>
+<button class="mt-md px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-[12px] font-label-md text-label-md text-on-surface hover:bg-surface-container-low transition-colors w-full md:w-auto">Track Package</button>
+</div>
+</div>
+<!-- Order Item 2 -->
+<div class="p-lg hover:bg-surface-container-lowest transition-colors flex flex-col md:flex-row gap-lg items-start md:items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-20 h-20 rounded-lg overflow-hidden bg-surface-variant flex-shrink-0">
+<img alt="Product Image" class="w-full h-full object-cover" data-alt="A pair of premium, minimalist wireless over-ear headphones in a matte white finish. They are displayed against a pristine, light background with subtle, soft shadowing that highlights their sleek curves and high-quality build. The visual style is modern, clean, and aligns with luxury consumer electronics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGKaAa9X274MTJMRxWypz6Yx35G1H3whz2r-FiVhT2p7xmggCvtrWnH23EtN0tM6XKQyuhNF-lYbnhMlPXNTrbgtWKjCWz3fWrR20OGdVFFsprhE1zJeoYOS2hhZ-Hz4g_rrmsPl_89tfYrHj5ntcre_gsFnKp1oOzK-fp53CjVj9OFtyelKwnrunSZgKtEv5wwdqjhBTYJd5s4y1Uk5h6mhyPfe-cUj3rNoJDCzZX9mQ_rIigFUDRaletfGcdVfwMKmyW_il9wDkx"/>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface">Aura Noise-Cancelling Headphones</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-xs">Order #ORD-2024-8845 • Placed Sep 28, 2024</p>
+<p class="font-label-md text-label-md text-on-surface mt-sm">$349.00</p>
+</div>
+</div>
+<div class="flex flex-col items-start md:items-end w-full md:w-auto mt-md md:mt-0">
+<div class="inline-flex items-center gap-xs px-3 py-1 rounded-full bg-outline-variant/20 text-on-surface-variant mb-sm">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-caption text-caption font-medium">Delivered</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">Delivered on Oct 2</p>
+<button class="mt-md px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-[12px] font-label-md text-label-md text-on-surface hover:bg-surface-container-low transition-colors w-full md:w-auto">Buy Again</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest w-full py-xl border-t border-outline-variant mt-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg px-gutter max-w-content_width mx-auto">
+<div class="flex flex-col gap-sm">
+<span class="font-h3 text-h3 font-bold text-on-surface">LUXE</span>
+<p class="font-caption text-caption text-on-surface-variant mt-sm">© 2024 LUXE Premium Commerce. All rights reserved.</p>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold mb-xs">Company</h4>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary hover:underline transition-all opacity-80 hover:opacity-100" href="#">About Us</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary hover:underline transition-all opacity-80 hover:opacity-100" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold mb-xs">Customer Service</h4>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary hover:underline transition-all opacity-80 hover:opacity-100" href="#">Shipping Policy</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary hover:underline transition-all opacity-80 hover:opacity-100" href="#">Returns</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold mb-xs">Legal</h4>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary hover:underline transition-all opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary hover:underline transition-all opacity-80 hover:opacity-100" href="#">Terms</a>
+</div>
+</div>
+</footer>
+</body></html>
