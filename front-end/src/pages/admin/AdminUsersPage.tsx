@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { formatDate } from '../../utils/formatDate';
 import { showToast } from '../../components/ui/Toast';
 
@@ -10,20 +10,25 @@ export function AdminUsersPage() {
     fetch('/api/admin/users', {
       headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
     })
-      .then(r => r.json())
+      .then((r) => r.json())
       .then(({ data }) => setUsers(data || []))
       .catch(() => {})
       .finally(() => setIsLoading(false));
   };
 
-  useEffect(() => { loadUsers(); }, []);
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
   const toggleRole = async (id: string, currentRole: string) => {
     const newRole = currentRole === 'ADMIN' ? 'USER' : 'ADMIN';
     try {
       const res = await fetch(`/api/admin/users/${id}/role`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
         body: JSON.stringify({ role: newRole }),
       });
       if (!res.ok) throw new Error();
@@ -34,59 +39,113 @@ export function AdminUsersPage() {
     }
   };
 
-  if (isLoading) return <div className="text-center py-16 text-gray-500">Đang tải...</div>;
+  if (isLoading) {
+    return (
+      <div className="animate-pulse space-y-4">
+        <div className="h-8 bg-surface-container rounded w-1/4" />
+        <div className="h-96 bg-surface-container rounded-xl" />
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Quản lý người dùng</h1>
+    <div>
+      <div className="flex justify-between items-center mb-lg">
+        <h1 className="font-h2 text-h2 text-on-surface">Quản lý người dùng</h1>
+      </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 border-b">
-            <tr>
-              <th className="text-left px-4 py-3 font-medium">Người dùng</th>
-              <th className="text-left px-4 py-3 font-medium">Email</th>
-              <th className="text-center px-4 py-3 font-medium">Vai trò</th>
-              <th className="text-center px-4 py-3 font-medium">Trạng thái</th>
-              <th className="text-center px-4 py-3 font-medium">Ngày tạo</th>
-              <th className="text-center px-4 py-3 font-medium">Thao tác</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {users.map(u => (
-              <tr key={u.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-sm font-medium">
-                      {u.fullName?.charAt(0) || '?'}
-                    </div>
-                    <span className="font-medium">{u.fullName}</span>
-                  </div>
-                </td>
-                <td className="px-4 py-3 text-gray-500">{u.email}</td>
-                <td className="px-4 py-3 text-center">
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${u.role === 'ADMIN' ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-800'}`}>
-                    {u.role}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-center">
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${u.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                    {u.isActive ? 'Hoạt động' : 'Khóa'}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-center text-gray-500 text-xs">{formatDate(u.createdAt)}</td>
-                <td className="px-4 py-3 text-center">
-                  <button onClick={() => toggleRole(u.id, u.role)} className="text-blue-600 hover:underline text-xs">
-                    {u.role === 'ADMIN' ? 'Hạ xuống User' : 'Nâng lên Admin'}
-                  </button>
-                </td>
+      <div className="bg-surface-container-lowest rounded-[20px] shadow-[0px_4px_20px_rgba(15,23,42,0.05)] border border-outline-variant/20 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-surface-container-low">
+              <tr>
+                <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Người dùng
+                </th>
+                <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Email
+                </th>
+                <th className="text-center px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Vai trò
+                </th>
+                <th className="text-center px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Trạng thái
+                </th>
+                <th className="text-center px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Ngày tạo
+                </th>
+                <th className="text-center px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Thao tác
+                </th>
               </tr>
-            ))}
-            {users.length === 0 && (
-              <tr><td colSpan={6} className="text-center py-8 text-gray-400">Chưa có người dùng</td></tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-outline-variant/30">
+              {users.map((u) => (
+                <tr key={u.id} className="hover:bg-surface-container-low transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center">
+                        <span className="font-label-md text-on-primary font-semibold">
+                          {u.fullName?.charAt(0) || '?'}
+                        </span>
+                      </div>
+                      <span className="font-body-md text-body-md text-on-surface font-medium">{u.fullName}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-caption text-on-surface-variant">{u.email}</td>
+                  <td className="px-6 py-4 text-center">
+                    <span
+                      className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-caption font-medium ${
+                        u.role === 'ADMIN' ? 'bg-primary/10 text-primary' : 'bg-surface-container text-on-surface-variant'
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-[14px]">
+                        {u.role === 'ADMIN' ? 'admin_panel_settings' : 'person'}
+                      </span>
+                      {u.role === 'ADMIN' ? 'Admin' : 'User'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <span
+                      className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-caption font-medium ${
+                        u.isActive ? 'bg-tertiary-container/20 text-tertiary' : 'bg-error/10 text-error'
+                      }`}
+                    >
+                      <div className={`w-1.5 h-1.5 rounded-full ${u.isActive ? 'bg-tertiary' : 'bg-error'}`} />
+                      {u.isActive ? 'Hoạt động' : 'Khóa'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-center text-caption text-on-surface-variant">
+                    {formatDate(u.createdAt)}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      onClick={() => toggleRole(u.id, u.role)}
+                      className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg font-caption transition-colors ${
+                        u.role === 'ADMIN'
+                          ? 'bg-error/10 text-error hover:bg-error/20'
+                          : 'bg-primary/10 text-primary hover:bg-primary/20'
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-[14px]">
+                        {u.role === 'ADMIN' ? 'arrow_downward' : 'arrow_upward'}
+                      </span>
+                      {u.role === 'ADMIN' ? 'Hạ User' : 'Nâng Admin'}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {users.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center">
+                    <span className="material-symbols-outlined text-4xl text-outline-variant mb-2 block">group</span>
+                    <p className="text-on-surface-variant">Chưa có người dùng</p>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

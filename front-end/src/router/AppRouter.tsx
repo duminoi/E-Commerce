@@ -1,4 +1,4 @@
-﻿import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
@@ -14,6 +14,7 @@ import { CheckoutPage } from '../pages/checkout/CheckoutPage';
 import { OrdersPage } from '../pages/user/OrdersPage';
 import { OrderDetailPage } from '../pages/user/OrderDetailPage';
 import { ProfilePage } from '../pages/profile/ProfilePage';
+import { WishlistPage } from '../pages/wishlist/WishlistPage';
 import { ChatPage } from '../pages/chat/ChatPage';
 import { PaymentResultPage } from '../pages/payment/PaymentResultPage';
 import { AdminDashboardPage } from '../pages/admin/AdminDashboardPage';
@@ -24,13 +25,13 @@ import { AdminUsersPage } from '../pages/admin/AdminUsersPage';
 export function AppRouter() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="min-h-screen flex flex-col bg-background">
         <Routes>
           {/* Public + user layout */}
           <Route element={
             <>
               <Header />
-              <main className="flex-1"><Outlet /></main>
+              <Outlet />
               <Footer />
             </>
           }>
@@ -47,6 +48,7 @@ export function AppRouter() {
               <Route path="/orders" element={<OrdersPage />} />
               <Route path="/orders/:id" element={<OrderDetailPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/wishlist" element={<WishlistPage />} />
               <Route path="/chat" element={<ChatPage />} />
             </Route>
           </Route>
@@ -62,7 +64,24 @@ export function AppRouter() {
           </Route>
         </Routes>
       </div>
-      <Toaster position="top-right" />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          className: '!bg-surface-container-lowest !text-on-surface !border !border-outline-variant/30 !rounded-xl !shadow-[0px_4px_20px_rgba(15,23,42,0.1)] !font-[Inter] !text-sm',
+          success: {
+            iconTheme: {
+              primary: '#007e37',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ba1a1a',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
     </BrowserRouter>
   );
 }

@@ -1,23 +1,37 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { orderApi } from '../../api/order.api';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 import { showToast } from '../../components/ui/Toast';
 
 const statusColors: Record<string, string> = {
-  PENDING: 'bg-yellow-100 text-yellow-800',
-  CONFIRMED: 'bg-blue-100 text-blue-800',
-  SHIPPING: 'bg-purple-100 text-purple-800',
-  DELIVERED: 'bg-green-100 text-green-800',
-  CANCELLED: 'bg-red-100 text-red-800',
+  PENDING: 'bg-secondary-container/20 text-secondary',
+  CONFIRMED: 'bg-primary/10 text-primary',
+  SHIPPING: 'bg-primary/10 text-primary',
+  DELIVERED: 'bg-tertiary-container/20 text-tertiary',
+  CANCELLED: 'bg-error/10 text-error',
 };
+
 const statusLabels: Record<string, string> = {
-  PENDING: 'Chờ xử lý', CONFIRMED: 'Đã xác nhận',
-  SHIPPING: 'Đang giao', DELIVERED: 'Đã giao', CANCELLED: 'Đã hủy',
+  PENDING: 'Chờ xử lý',
+  CONFIRMED: 'Đã xác nhận',
+  SHIPPING: 'Đang giao',
+  DELIVERED: 'Đã giao',
+  CANCELLED: 'Đã hủy',
+};
+
+const statusIcons: Record<string, string> = {
+  PENDING: 'pending',
+  CONFIRMED: 'check_circle',
+  SHIPPING: 'local_shipping',
+  DELIVERED: 'task_alt',
+  CANCELLED: 'cancel',
 };
 
 const nextStatus: Record<string, string> = {
-  PENDING: 'CONFIRMED', CONFIRMED: 'SHIPPING', SHIPPING: 'DELIVERED',
+  PENDING: 'CONFIRMED',
+  CONFIRMED: 'SHIPPING',
+  SHIPPING: 'DELIVERED',
 };
 
 export function AdminOrdersPage() {
@@ -31,7 +45,9 @@ export function AdminOrdersPage() {
       .finally(() => setIsLoading(false));
   };
 
-  useEffect(() => { loadOrders(); }, []);
+  useEffect(() => {
+    loadOrders();
+  }, []);
 
   const handleUpdateStatus = async (id: string, status: string) => {
     try {
@@ -43,51 +59,93 @@ export function AdminOrdersPage() {
     }
   };
 
-  if (isLoading) return <div className="text-center py-16 text-gray-500">Đang tải...</div>;
+  if (isLoading) {
+    return (
+      <div className="animate-pulse space-y-4">
+        <div className="h-8 bg-surface-container rounded w-1/4" />
+        <div className="h-96 bg-surface-container rounded-xl" />
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Quản lý đơn hàng</h1>
+    <div>
+      <div className="flex justify-between items-center mb-lg">
+        <h1 className="font-h2 text-h2 text-on-surface">Quản lý đơn hàng</h1>
+      </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 border-b">
-            <tr>
-              <th className="text-left px-4 py-3 font-medium">Mã đơn</th>
-              <th className="text-left px-4 py-3 font-medium">Ngày</th>
-              <th className="text-right px-4 py-3 font-medium">Tổng tiền</th>
-              <th className="text-center px-4 py-3 font-medium">Trạng thái</th>
-              <th className="text-center px-4 py-3 font-medium">Thao tác</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {orders.map(order => (
-              <tr key={order.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3 font-mono text-xs">{order.id.slice(0, 8)}...</td>
-                <td className="px-4 py-3 text-gray-500">{formatDate(order.createdAt)}</td>
-                <td className="px-4 py-3 text-right font-medium">{formatCurrency(order.totalPrice)}</td>
-                <td className="px-4 py-3 text-center">
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${statusColors[order.status] || ''}`}>
-                    {statusLabels[order.status] || order.status}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-center">
-                  {nextStatus[order.status] && (
-                    <button
-                      onClick={() => handleUpdateStatus(order.id, nextStatus[order.status])}
-                      className="text-blue-600 hover:underline text-xs"
-                    >
-                      {order.status === 'PENDING' ? 'Xác nhận' : order.status === 'CONFIRMED' ? 'Giao hàng' : 'Hoàn thành'}
-                    </button>
-                  )}
-                </td>
+      <div className="bg-surface-container-lowest rounded-[20px] shadow-[0px_4px_20px_rgba(15,23,42,0.05)] border border-outline-variant/20 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-surface-container-low">
+              <tr>
+                <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Mã đơn
+                </th>
+                <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Ngày
+                </th>
+                <th className="text-right px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Tổng tiền
+                </th>
+                <th className="text-center px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Trạng thái
+                </th>
+                <th className="text-center px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Thao tác
+                </th>
               </tr>
-            ))}
-            {orders.length === 0 && (
-              <tr><td colSpan={5} className="text-center py-8 text-gray-400">Chưa có đơn hàng</td></tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-outline-variant/30">
+              {orders.map(order => (
+                <tr key={order.id} className="hover:bg-surface-container-low transition-colors">
+                  <td className="px-6 py-4 font-body-md text-on-surface font-medium">
+                    #{order.id.slice(0, 8)}
+                  </td>
+                  <td className="px-6 py-4 text-caption text-on-surface-variant">
+                    {formatDate(order.createdAt)}
+                  </td>
+                  <td className="px-6 py-4 text-right font-body-md font-medium text-on-surface">
+                    {formatCurrency(order.totalPrice)}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-caption font-medium ${statusColors[order.status] || ''}`}>
+                      <span className="material-symbols-outlined text-[14px]">
+                        {statusIcons[order.status] || 'info'}
+                      </span>
+                      {statusLabels[order.status] || order.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {nextStatus[order.status] && (
+                      <button
+                        onClick={() => handleUpdateStatus(order.id, nextStatus[order.status])}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary/10 text-primary font-caption hover:bg-primary/20 transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[14px]">
+                          {order.status === 'PENDING' && 'check'}
+                          {order.status === 'CONFIRMED' && 'local_shipping'}
+                          {order.status === 'SHIPPING' && 'task_alt'}
+                        </span>
+                        {order.status === 'PENDING' && 'Xác nhận'}
+                        {order.status === 'CONFIRMED' && 'Giao hàng'}
+                        {order.status === 'SHIPPING' && 'Hoàn thành'}
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+              {orders.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-6 py-12 text-center">
+                    <span className="material-symbols-outlined text-4xl text-outline-variant mb-2 block">receipt_long</span>
+                    <p className="text-on-surface-variant">Chưa có đơn hàng</p>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

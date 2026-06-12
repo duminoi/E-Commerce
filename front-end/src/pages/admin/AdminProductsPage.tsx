@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { productApi } from '../../api/product.api';
 import { formatCurrency } from '../../utils/formatCurrency';
 
@@ -21,49 +21,88 @@ export function AdminProductsPage() {
     } catch { /* ignore */ }
   };
 
-  if (isLoading) return <div className="text-center py-16 text-gray-500">Đang tải...</div>;
+  if (isLoading) {
+    return (
+      <div className="animate-pulse space-y-4">
+        <div className="h-8 bg-surface-container rounded w-1/4" />
+        <div className="h-96 bg-surface-container rounded-xl" />
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Quản lý sản phẩm</h1>
+    <div>
+      <div className="flex justify-between items-center mb-lg">
+        <h1 className="font-h2 text-h2 text-on-surface">Quản lý sản phẩm</h1>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 border-b">
-            <tr>
-              <th className="text-left px-4 py-3 font-medium">Sản phẩm</th>
-              <th className="text-left px-4 py-3 font-medium">Danh mục</th>
-              <th className="text-right px-4 py-3 font-medium">Giá</th>
-              <th className="text-right px-4 py-3 font-medium">Tồn kho</th>
-              <th className="text-right px-4 py-3 font-medium">Đã bán</th>
-              <th className="text-center px-4 py-3 font-medium">Thao tác</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {products.map(p => (
-              <tr key={p.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-3">
-                    <img src={p.images?.[0]?.url || '/placeholder.png'} alt={p.name} className="w-10 h-10 rounded object-cover bg-gray-100" />
-                    <span className="font-medium line-clamp-1">{p.name}</span>
-                  </div>
-                </td>
-                <td className="px-4 py-3 text-gray-500">{p.category?.name}</td>
-                <td className="px-4 py-3 text-right font-medium">{formatCurrency(p.price)}</td>
-                <td className="px-4 py-3 text-right">{p.quantity}</td>
-                <td className="px-4 py-3 text-right">{p.sold}</td>
-                <td className="px-4 py-3 text-center">
-                  <button onClick={() => handleDelete(p.id)} className="text-red-500 hover:underline text-xs">Xóa</button>
-                </td>
+      <div className="bg-surface-container-lowest rounded-[20px] shadow-[0px_4px_20px_rgba(15,23,42,0.05)] border border-outline-variant/20 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-surface-container-low">
+              <tr>
+                <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Sản phẩm
+                </th>
+                <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Danh mục
+                </th>
+                <th className="text-right px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Giá
+                </th>
+                <th className="text-right px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Tồn kho
+                </th>
+                <th className="text-right px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Đã bán
+                </th>
+                <th className="text-center px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                  Thao tác
+                </th>
               </tr>
-            ))}
-            {products.length === 0 && (
-              <tr><td colSpan={6} className="text-center py-8 text-gray-400">Chưa có sản phẩm</td></tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-outline-variant/30">
+              {products.map(p => (
+                <tr key={p.id} className="hover:bg-surface-container-low transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={p.images?.[0]?.url || '/placeholder.png'}
+                        alt={p.name}
+                        className="w-12 h-12 rounded-lg object-cover bg-surface-container-low"
+                      />
+                      <span className="font-body-md text-body-md text-on-surface font-medium line-clamp-1">
+                        {p.name}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-caption text-on-surface-variant">{p.category?.name}</td>
+                  <td className="px-6 py-4 text-right font-body-md font-medium text-on-surface">
+                    {formatCurrency(p.price)}
+                  </td>
+                  <td className="px-6 py-4 text-right font-body-md text-on-surface">{p.quantity}</td>
+                  <td className="px-6 py-4 text-right font-body-md text-on-surface">{p.sold}</td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      onClick={() => handleDelete(p.id)}
+                      className="p-2 text-on-surface-variant hover:text-error transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-[20px]">delete</span>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {products.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center">
+                    <span className="material-symbols-outlined text-4xl text-outline-variant mb-2 block">inventory_2</span>
+                    <p className="text-on-surface-variant">Chưa có sản phẩm</p>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

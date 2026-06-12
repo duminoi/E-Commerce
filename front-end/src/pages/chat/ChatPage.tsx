@@ -1,8 +1,9 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import type { Socket } from 'socket.io-client';
 import { useAuthStore } from '../../store/auth.store';
-import { Button } from '../../components/ui/Button';
+import { ROUTES } from '../../utils/constants';
 
 interface Message {
   id: string;
@@ -33,7 +34,6 @@ export function ChatPage() {
     s.on('connect', () => setIsConnected(true));
     s.on('disconnect', () => setIsConnected(false));
 
-    // Get or create room
     fetch('/api/chat/rooms', {
       headers: { Authorization: `Bearer ${token}` },
       method: 'POST',
@@ -60,7 +60,6 @@ export function ChatPage() {
     });
 
     setSocket(s);
-
     return () => { s.disconnect(); };
   }, [isAuthenticated, user]);
 
@@ -76,32 +75,82 @@ export function ChatPage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <p className="text-gray-600">Vui lòng đăng nhập để sử dụng chat hỗ trợ</p>
-      </div>
+      <main className="flex-grow pt-[104px] pb-3xl flex items-center justify-center px-gutter">
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <span className="material-symbols-outlined text-6xl text-outline-variant mb-4">chat</span>
+          <h2 className="font-h2 text-h2 text-on-surface mb-2">Đăng nhập để chat</h2>
+          <p className="font-body-md text-body-md text-on-surface-variant mb-6">
+            Bạn cần đăng nhập để sử dụng tính năng hỗ trợ trực tuyến
+          </p>
+          <Link
+            to={ROUTES.LOGIN}
+            className="inline-flex items-center gap-2 bg-primary-container text-on-primary font-label-md py-3 px-8 rounded-xl hover:bg-blue-700 transition-colors"
+          >
+            <span className="material-symbols-outlined">login</span>
+            Đăng nhập
+          </Link>
+        </div>
+      </main>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="px-4 py-3 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
-          <h1 className="font-semibold">Hỗ trợ trực tuyến</h1>
-          <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-gray-400'}`} />
+    <main className="flex-grow pt-[104px] pb-3xl px-gutter max-w-max_width mx-auto w-full">
+      {/* Breadcrumbs */}
+      <nav className="flex items-center gap-2 font-caption text-caption text-on-surface-variant/70 mb-lg">
+        <Link className="hover:text-primary transition-colors" to="/">Trang chủ</Link>
+        <span>/</span>
+        <span className="text-on-surface">Hỗ trợ trực tuyến</span>
+      </nav>
+
+      <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-[0px_4px_20px_rgba(15,23,42,0.05)] overflow-hidden">
+        {/* Chat Header */}
+        <div className="px-lg py-md border-b border-outline-variant/30 bg-surface-container-low flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
+              <span className="material-symbols-outlined text-on-primary">support_agent</span>
+            </div>
+            <div>
+              <h2 className="font-label-md text-label-md text-on-surface font-semibold">Hỗ trợ trực tuyến</h2>
+              <p className="text-caption text-on-surface-variant">
+                {isConnected ? 'Đang kết nối' : 'Ngoại tuyến'}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className={`w-2.5 h-2.5 rounded-full ${isConnected ? 'bg-tertiary-container' : 'bg-outline-variant'}`} />
+            <span className="font-caption text-caption text-on-surface-variant">
+              {isConnected ? 'Trực tuyến' : 'Ngoại tuyến'}
+            </span>
+          </div>
         </div>
 
-        <div className="h-[500px] overflow-y-auto p-4 space-y-3">
+        {/* Messages */}
+        <div className="h-[500px] overflow-y-auto p-lg space-y-4 bg-surface-container-low/50">
           {messages.length === 0 && (
-            <p className="text-center text-gray-400 py-16">Chưa có tin nhắn. Hãy gửi tin nhắn để bắt đầu!</p>
+            <div className="flex flex-col items-center justify-center h-full text-center">
+              <span className="material-symbols-outlined text-4xl text-outline-variant mb-2">forum</span>
+              <p className="font-body-md text-on-surface-variant">Chưa có tin nhắn</p>
+              <p className="text-caption text-on-surface-variant/70 mt-1">Hãy gửi tin nhắn để bắt đầu!</p>
+            </div>
           )}
           {messages.map(msg => (
             <div key={msg.id} className={`flex ${msg.senderId === user?.id ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[70%] rounded-lg px-4 py-2 text-sm ${
-                msg.senderId === user?.id ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'
+              <div className={`max-w-[70%] rounded-2xl px-4 py-3 ${
+                msg.senderId === user?.id
+                  ? 'bg-primary-container text-on-primary rounded-tr-sm'
+                  : 'bg-surface-container-lowest border border-outline-variant/30 text-on-surface rounded-tl-sm'
               }`}>
-                <p>{msg.message}</p>
-                <p className={`text-xs mt-1 ${msg.senderId === user?.id ? 'text-blue-200' : 'text-gray-400'}`}>
-                  {new Date(msg.createdAt).toLocaleTimeString('vi-VN')}
+                {msg.senderId !== user?.id && msg.sender?.fullName && (
+                  <p className="font-caption text-xs font-medium text-primary mb-1">
+                    {msg.sender.fullName}
+                  </p>
+                )}
+                <p className="font-body-md text-sm">{msg.message}</p>
+                <p className={`text-xs mt-1 ${
+                  msg.senderId === user?.id ? 'text-on-primary/60' : 'text-on-surface-variant/60'
+                }`}>
+                  {new Date(msg.createdAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
                 </p>
               </div>
             </div>
@@ -109,18 +158,25 @@ export function ChatPage() {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="border-t border-gray-200 p-4 flex gap-2">
+        {/* Input */}
+        <div className="border-t border-outline-variant/30 p-md flex gap-3 bg-surface-container-lowest">
           <input
             type="text"
             value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && sendMessage()}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
             placeholder="Nhập tin nhắn..."
-            className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 bg-surface-container-low border border-outline-variant/30 rounded-xl px-4 py-3 text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
           />
-          <Button onClick={sendMessage} disabled={!input.trim()}>Gửi</Button>
+          <button
+            onClick={sendMessage}
+            disabled={!input.trim()}
+            className="w-12 h-12 rounded-full bg-primary-container text-on-primary flex items-center justify-center hover:bg-blue-700 transition-colors active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span className="material-symbols-outlined">send</span>
+          </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

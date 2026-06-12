@@ -1,1 +1,316 @@
 @import "tailwindcss";
+
+@theme {
+  /* ===== Colors ===== */
+  --color-primary: #004ac6;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #2563eb;
+  --color-on-primary-container: #eeefff;
+  --color-secondary: #855300;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fea619;
+  --color-on-secondary-container: #684000;
+  --color-tertiary: #006229;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #007e37;
+  --color-on-tertiary-container: #c1ffc5;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  --color-surface: #faf8ff;
+  --color-surface-dim: #d2d9f4;
+  --color-surface-bright: #faf8ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f2f3ff;
+  --color-surface-container: #eaedff;
+  --color-surface-container-high: #e2e7ff;
+  --color-surface-container-highest: #dae2fd;
+  --color-on-surface: #131b2e;
+  --color-on-surface-variant: #434655;
+  --color-inverse-surface: #283044;
+  --color-inverse-on-surface: #eef0ff;
+  --color-outline: #737686;
+  --color-outline-variant: #c3c6d7;
+  --color-background: #faf8ff;
+  --color-on-background: #131b2e;
+  --color-surface-variant: #dae2fd;
+  --color-surface-tint: #0053db;
+  --color-primary-fixed: #dbe1ff;
+  --color-primary-fixed-dim: #b4c5ff;
+  --color-on-primary-fixed: #00174b;
+  --color-on-primary-fixed-variant: #003ea8;
+  --color-secondary-fixed: #ffddb8;
+  --color-secondary-fixed-dim: #ffb95f;
+  --color-on-secondary-fixed: #2a1700;
+  --color-on-secondary-fixed-variant: #653e00;
+  --color-tertiary-fixed: #6bff8f;
+  --color-tertiary-fixed-dim: #4ae176;
+  --color-on-tertiary-fixed: #002109;
+  --color-on-tertiary-fixed-variant: #005321;
+  --color-inverse-primary: #b4c5ff;
+
+  /* ===== Font Families ===== */
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Geist', sans-serif;
+  --font-geist: 'Geist', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+
+  /* ===== Font Sizes (generates text-* classes) ===== */
+  --text-hero: 64px;
+  --text-hero--line-height: 72px;
+  --text-hero--font-weight: 700;
+  --text-hero--letter-spacing: -0.02em;
+
+  --text-hero-mobile: 40px;
+  --text-hero-mobile--line-height: 48px;
+  --text-hero-mobile--font-weight: 700;
+  --text-hero-mobile--letter-spacing: -0.01em;
+
+  --text-h1: 48px;
+  --text-h1--line-height: 56px;
+  --text-h1--font-weight: 700;
+  --text-h1--letter-spacing: -0.02em;
+
+  --text-h2: 36px;
+  --text-h2--line-height: 44px;
+  --text-h2--font-weight: 600;
+  --text-h2--letter-spacing: -0.01em;
+
+  --text-h3: 28px;
+  --text-h3--line-height: 36px;
+  --text-h3--font-weight: 600;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+
+  --text-label-md: 14px;
+  --text-label-md--line-height: 20px;
+  --text-label-md--font-weight: 500;
+  --text-label-md--letter-spacing: 0.05em;
+
+  --text-caption: 14px;
+  --text-caption--line-height: 20px;
+  --text-caption--font-weight: 400;
+
+  /* ===== Spacing (generates p-*, m-*, gap-*, etc.) ===== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-base: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-gutter: 24px;
+
+  /* ===== Container widths ===== */
+  --container-max_width: 1440px;
+  --container-content_width: 1280px;
+
+  /* ===== Breakpoints ===== */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
+}
+
+/* ========== Base ========== */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Geist', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.font-heading {
+  font-family: 'Geist', sans-serif;
+}
+
+/* ========== Glass Effect ========== */
+.glass-effect {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* ========== Hero ========== */
+.hero-pattern {
+  background-image: radial-gradient(#E2E8F0 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ========== Card Hover ========== */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 12px 32px rgba(15, 23, 42, 0.12);
+}
+
+/* ========== Image Zoom ========== */
+.img-zoom img {
+  transition: transform 0.5s ease;
+}
+
+.img-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* ========== Product Card Reveal ========== */
+/* Reveal quick-add button on product card hover */
+.reveal-btn {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Target: Link.group wraps the card; group-hover activates on hover */
+.product-card:hover .reveal-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== Scrollbar Utilities ========== */
+.hide-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #c3c6d7;
+  border-radius: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #737686;
+}
+
+/* ========== Range Slider ========== */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #004ac6;
+  cursor: pointer;
+}
+
+/* ========== Selection ========== */
+::selection {
+  background-color: rgba(0, 74, 198, 0.15);
+  color: #004ac6;
+}
+
+/* ========== Typography Classes ========== */
+.font-hero {
+  font-family: 'Geist', sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 72px;
+  letter-spacing: -0.02em;
+}
+
+.font-hero-mobile {
+  font-family: 'Geist', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+  letter-spacing: -0.01em;
+}
+
+.font-h1 {
+  font-family: 'Geist', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  letter-spacing: -0.02em;
+}
+
+.font-h2 {
+  font-family: 'Geist', sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 44px;
+  letter-spacing: -0.01em;
+}
+
+.font-h3 {
+  font-family: 'Geist', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: 0;
+}
+
+.font-body-lg {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.font-body-md {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.font-label-md {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.05em;
+}
+
+.font-caption {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+/* Responsive Hero */
+@media (max-width: 768px) {
+  .font-hero {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.01em;
+  }
+}
