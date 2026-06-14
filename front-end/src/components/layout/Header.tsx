@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useAuthStore } from '../../store/auth.store';
 import { useCartStore } from '../../store/cart.store';
 import { ROUTES } from '../../utils/constants';
@@ -9,6 +10,12 @@ export function Header() {
   const { itemCount, fetchCart } = useCartStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setScrolled(latest > 20);
+  });
 
   useEffect(() => {
     if (isAuthenticated) fetchCart();
@@ -36,15 +43,37 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 w-full h-[72px] z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/20 shadow-[0px_1px_8px_rgba(15,23,42,0.04)]">
+    <motion.header
+      className="fixed top-0 w-full z-50 border-b border-outline-variant/20"
+      animate={{
+        height: scrolled ? 60 : 72,
+        backgroundColor: scrolled
+          ? 'rgba(250, 248, 255, 0.92)'
+          : 'rgba(250, 248, 255, 0.85)',
+        backdropFilter: scrolled ? 'blur(20px)' : 'blur(16px)',
+      }}
+      transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+      style={{
+        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'blur(16px)',
+        boxShadow: scrolled
+          ? '0px 1px 12px rgba(15, 23, 42, 0.08)'
+          : '0px 1px 8px rgba(15, 23, 42, 0.04)',
+      }}
+    >
       <div className="flex items-center justify-between px-gutter max-w-max_width mx-auto w-full h-full">
         {/* Left: Logo + Nav */}
         <div className="flex items-center gap-xl">
           <Link
             to={ROUTES.HOME}
-            className="text-[22px] font-bold tracking-tighter text-on-surface font-heading"
+            className="text-on-surface font-heading font-bold tracking-tighter"
           >
-            LUXE
+            <motion.span
+              animate={{ fontSize: scrolled ? '18px' : '22px' }}
+              transition={{ duration: 0.3 }}
+              className="block"
+            >
+              LUXE
+            </motion.span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-lg">
@@ -56,11 +85,18 @@ export function Header() {
                   to={item.path}
                   className={`text-[15px] font-medium transition-colors relative pb-0.5 ${
                     active
-                      ? 'text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary after:rounded-full'
+                      ? 'text-primary'
                       : 'text-on-surface-variant hover:text-on-surface'
                   }`}
                 >
                   {item.label}
+                  {active && (
+                    <motion.div
+                      layoutId="nav-underline"
+                      className="absolute -bottom-[1px] left-0 right-0 h-[2px] bg-primary rounded-full"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
                 </Link>
               );
             })}
@@ -86,9 +122,15 @@ export function Header() {
               >
                 <span className="material-symbols-outlined text-[22px]">shopping_cart</span>
                 {itemCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 bg-primary text-white text-[9px] w-[16px] h-[16px] rounded-full flex items-center justify-center font-semibold leading-none">
+                  <motion.span
+                    key={itemCount}
+                    initial={{ scale: 0.5 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                    className="absolute top-1.5 right-1.5 bg-primary text-white text-[9px] w-[16px] h-[16px] rounded-full flex items-center justify-center font-semibold leading-none"
+                  >
                     {itemCount > 99 ? '99+' : itemCount}
-                  </span>
+                  </motion.span>
                 )}
               </Link>
 
@@ -146,6 +188,6 @@ export function Header() {
           )}
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
