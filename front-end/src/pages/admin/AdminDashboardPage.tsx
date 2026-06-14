@@ -72,13 +72,13 @@ export function AdminDashboardPage() {
         </p>
       </div>
 
-      {/* Stats Grid */}
+      {/* Stats Grid — uses .admin-card.card-hover from design system */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg mb-xl">
         {cards.map((card) => (
           <Link
             key={card.label}
             to={card.link}
-            className="bg-surface-container-lowest rounded-[20px] p-lg shadow-[0px_4px_20px_rgba(15,23,42,0.05)] border border-outline-variant/20 card-hover flex flex-col justify-between"
+            className="admin-card card-hover p-lg flex flex-col justify-between"
           >
             <div className="flex items-center justify-between mb-lg">
               <span className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
@@ -93,9 +93,9 @@ export function AdminDashboardPage() {
         ))}
       </div>
 
-      {/* Recent Orders */}
-      <div className="bg-surface-container-lowest rounded-[20px] shadow-[0px_4px_20px_rgba(15,23,42,0.05)] border border-outline-variant/20 overflow-hidden">
-        <div className="p-lg border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-lowest">
+      {/* Recent Orders — uses .admin-table-card from design system (tabular data) */}
+      <div className="admin-table-card">
+        <div className="p-lg border-b border-outline-variant/50 bg-surface-container-lowest flex justify-between items-center">
           <h2 className="font-h3 text-h3 text-on-surface">Đơn hàng gần đây</h2>
           <Link
             to={ROUTES.ADMIN.ORDERS}
@@ -106,7 +106,7 @@ export function AdminDashboardPage() {
           </Link>
         </div>
 
-        <div className="divide-y divide-outline-variant/30">
+        <div className="divide-y divide-outline-variant/50">
           {stats?.recentOrders?.length > 0 ? (
             stats.recentOrders.map((order: any) => (
               <div

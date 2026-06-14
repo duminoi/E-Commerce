@@ -1,17 +1,90 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth.store';
 import { showToast } from '../../components/ui/Toast';
 import { ROUTES } from '../../utils/constants';
+import { env, isGoogleLoginConfigured } from '../../config/google';
+
+declare global {
+  interface Window {
+    google?: {
+      accounts: {
+        id: {
+          initialize: (config: {
+            client_id: string;
+            callback: (response: { credential: string }) => void;
+            auto_select?: boolean;
+            cancel_on_tap_outside?: boolean;
+          }) => void;
+          renderButton: (
+            element: HTMLElement,
+            options: { theme?: string; size?: string; shape?: string; width?: number; text?: string; logo_alignment?: string },
+          ) => void;
+          disableAutoSelect: () => void;
+        };
+      };
+    };
+  }
+}
 
 export function RegisterPage() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { register, isLoading } = useAuthStore();
+  const { register, googleLogin, isLoading } = useAuthStore();
   const navigate = useNavigate();
+  const googleButtonRef = useRef<HTMLDivElement>(null);
+  const googleInitialized = useRef(false);
+
+  // Initialize Google Sign-In once on mount
+  useEffect(() => {
+    if (!isGoogleLoginConfigured() || googleInitialized.current) return;
+
+    const initGoogle = () => {
+      if (!window.google?.accounts?.id) return;
+
+      googleInitialized.current = true;
+      window.google.accounts.id.initialize({
+        client_id: env.googleClientId!,
+        callback: handleGoogleResponse,
+        auto_select: false,
+        cancel_on_tap_outside: true,
+      });
+
+      if (googleButtonRef.current) {
+        window.google.accounts.id.renderButton(googleButtonRef.current, {
+          theme: 'outline',
+          size: 'large',
+          shape: 'rectangular',
+          width: googleButtonRef.current.clientWidth || 392,
+          text: 'signup_with',
+          logo_alignment: 'left',
+        });
+      }
+    };
+
+    const interval = setInterval(() => {
+      if (window.google?.accounts?.id) {
+        clearInterval(interval);
+        initGoogle();
+      }
+    }, 200);
+    initGoogle();
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleGoogleResponse = async (response: { credential: string }) => {
+    try {
+      await googleLogin(response.credential);
+      showToast.success('Đăng ký với Google thành công');
+      navigate(ROUTES.HOME);
+    } catch (err: any) {
+      const message = err.response?.data?.message || 'Đăng ký với Google thất bại';
+      showToast.error(message);
+    }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -168,6 +241,34 @@ export function RegisterPage() {
             </button>
           </form>
         </div>
+
+        {/* Divider */}
+        <div className="flex items-center gap-md my-lg">
+          <div className="flex-1 h-px bg-outline-variant/40" />
+          <span className="font-caption text-caption text-on-surface-variant px-[4px]">
+            or
+          </span>
+          <div className="flex-1 h-px bg-outline-variant/40" />
+        </div>
+
+        {/* Google Sign-In button */}
+        {isGoogleLoginConfigured() ? (
+          <div className="flex justify-center" ref={googleButtonRef} />
+        ) : (
+          <button
+            type="button"
+            disabled
+            className="w-full h-[48px] bg-surface-container-low border border-outline-variant/50 rounded-xl font-body-md text-body-md font-medium text-on-surface/40 cursor-not-allowed flex items-center justify-center gap-[10px]"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Continue with Google
+          </button>
+        )}
 
         {/* Login link */}
         <p className="text-center mt-lg font-body-md text-body-md text-on-surface-variant">

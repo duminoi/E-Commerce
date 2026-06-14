@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { productApi } from '../../api/product.api';
 import { ProductGrid } from '../../components/product/ProductGrid';
 import { ProductFilter } from '../../components/product/ProductFilter';
@@ -7,18 +7,20 @@ import { ProductSearch } from '../../components/product/ProductSearch';
 import type { Product } from '../../types/product.type';
 
 export function ProductListPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState<string | undefined>();
   const [sort, setSort] = useState('newest');
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
+  const categoryFromUrl = searchParams.get('category') || undefined;
+
   useEffect(() => {
     setIsLoading(true);
-    productApi.getAll({ search: search || undefined, category, sort, page, limit: 20 })
+    productApi.getAll({ search: search || undefined, category: categoryFromUrl, sort, page, limit: 20 })
       .then(({ data }) => {
         setProducts(data.data?.items || []);
         setTotalPages(data.data?.meta?.totalPages || 1);
@@ -28,7 +30,16 @@ export function ProductListPage() {
         console.error('Error response:', err.response?.data);
       })
       .finally(() => setIsLoading(false));
-  }, [search, category, sort, page]);
+  }, [search, categoryFromUrl, sort, page]);
+
+  const handleCategoryChange = (slug: string | undefined) => {
+    setPage(1);
+    if (slug) {
+      setSearchParams({ category: slug });
+    } else {
+      setSearchParams({});
+    }
+  };
 
   const startItem = (page - 1) * 20 + 1;
   const endItem = Math.min(page * 20, products.length || 20);
@@ -40,10 +51,10 @@ export function ProductListPage() {
         <Link className="hover:text-primary transition-colors" to="/">Trang chủ</Link>
         <span>/</span>
         <span className="text-on-surface">Sản phẩm</span>
-        {category && (
+        {categoryFromUrl && (
           <>
             <span>/</span>
-            <span className="text-on-surface">{category}</span>
+            <span className="text-on-surface">{categoryFromUrl}</span>
           </>
         )}
       </nav>
@@ -71,8 +82,8 @@ export function ProductListPage() {
         {/* Sidebar Filters */}
         <aside className={`w-full lg:w-64 flex-shrink-0 ${isMobileFilterOpen ? 'block' : 'hidden lg:block'}`}>
           <ProductFilter
-            selectedCategory={category}
-            onCategoryChange={(slug) => { setCategory(slug); setPage(1); }}
+            selectedCategory={categoryFromUrl}
+            onCategoryChange={handleCategoryChange}
             sort={sort}
             onSortChange={(s) => { setSort(s); setPage(1); }}
           />

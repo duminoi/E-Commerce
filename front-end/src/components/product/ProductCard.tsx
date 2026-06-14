@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { Product } from '../../types/product.type';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { useCartStore } from '../../store/cart.store';
+import { useAuthStore } from '../../store/auth.store';
+import toast from 'react-hot-toast';
 
 interface ProductCardProps {
   product: Product;
@@ -9,6 +12,10 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const { addItem } = useCartStore();
+  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
 
   const thumbnail =
     product.images?.find((img) => img.isThumbnail)?.url ||
@@ -22,6 +29,27 @@ export function ProductCard({ product }: ProductCardProps) {
   const isNew =
     product.createdAt &&
     Date.now() - new Date(product.createdAt).getTime() < 7 * 24 * 60 * 60 * 1000;
+
+  const handleQuickAdd = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isAuthenticated) {
+      toast.error('Vui lòng đăng nhập để thêm vào giỏ hàng');
+      navigate('/login');
+      return;
+    }
+
+    setIsAdding(true);
+    try {
+      await addItem(product.id, 1);
+      toast.success('Đã thêm vào giỏ hàng');
+    } catch {
+      toast.error('Thêm vào giỏ hàng thất bại');
+    } finally {
+      setIsAdding(false);
+    }
+  };
 
   return (
     <Link
@@ -78,13 +106,11 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Quick Add – reveals on hover */}
         <div className="reveal-btn absolute bottom-[12px] left-0 w-full px-[12px]">
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            className="w-full h-[40px] bg-white/95 backdrop-blur-sm text-on-surface rounded-[10px] border border-outline-variant/40 text-[13px] font-semibold hover:bg-primary hover:text-white hover:border-transparent transition-all duration-200 font-heading"
+            onClick={handleQuickAdd}
+            disabled={isAdding}
+            className="w-full h-[40px] bg-white/95 backdrop-blur-sm text-on-surface rounded-[10px] border border-outline-variant/40 text-[13px] font-semibold hover:bg-primary hover:text-white hover:border-transparent transition-all duration-200 font-heading disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Quick Add
+            {isAdding ? 'Đang thêm...' : 'Quick Add'}
           </button>
         </div>
       </div>

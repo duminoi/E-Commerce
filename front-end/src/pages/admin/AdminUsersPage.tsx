@@ -54,10 +54,11 @@ export function AdminUsersPage() {
         <h1 className="font-h2 text-h2 text-on-surface">Quản lý người dùng</h1>
       </div>
 
-      <div className="bg-surface-container-lowest rounded-[20px] shadow-[0px_4px_20px_rgba(15,23,42,0.05)] border border-outline-variant/20 overflow-hidden">
+      {/* Table card — uses .admin-table-card from Apex Commerce design system */}
+      <div className="admin-table-card">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-surface-container-low">
+            <thead className="bg-surface-container-lowest">
               <tr>
                 <th className="text-left px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
                   Người dùng
@@ -79,7 +80,7 @@ export function AdminUsersPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/30">
+            <tbody className="divide-y divide-outline-variant/50">
               {users.map((u) => (
                 <tr key={u.id} className="hover:bg-surface-container-low transition-colors">
                   <td className="px-6 py-4">

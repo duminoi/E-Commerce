@@ -12,9 +12,9 @@ export function AdminLayout() {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-screen bg-background pt-[72px]">
-      {/* Admin Sidebar */}
-      <aside className="w-64 bg-surface-container-lowest border-r border-outline-variant/30 p-lg fixed top-[72px] left-0 bottom-0 overflow-y-auto">
+    <div className="flex min-h-screen bg-background">
+      {/* Admin Sidebar — uses glass effect from Apex Commerce design system */}
+      <aside className="admin-sidebar w-64 p-lg fixed top-0 left-0 bottom-0 overflow-y-auto sidebar-scroll">
         <div className="mb-lg pb-md border-b border-outline-variant/30">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
@@ -57,8 +57,8 @@ export function AdminLayout() {
         </div>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 ml-64 p-lg">
+      {/* Main Content — uses .admin-page for consistent padding/spacing */}
+      <main className="flex-1 ml-64 admin-page">
         <Outlet />
       </main>
     </div>

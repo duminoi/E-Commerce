@@ -1,6 +1,8 @@
 ﻿import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { randomUUID } from 'crypto';
+import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { Address } from './entities/address.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -34,6 +36,46 @@ export class UserService {
     }
     const user = this.userRepository.create(data);
     return this.userRepository.save(user);
+  }
+
+  /**
+   * Find existing user by email, or create a new one without a password
+   * (used for OAuth providers like Google).
+   */
+  async findOrCreateByEmail(data: {
+    email: string;
+    fullName: string;
+    avatar?: string;
+  }): Promise<{ user: User; created: boolean }> {
+    const existing = await this.userRepository.findOne({ where: { email: data.email } });
+    if (existing) {
+      // Update name/avatar if Google provides fresher values
+      let dirty = false;
+      if (data.fullName && data.fullName !== existing.fullName) {
+        existing.fullName = data.fullName;
+        dirty = true;
+      }
+      if (data.avatar && data.avatar !== existing.avatar) {
+        existing.avatar = data.avatar;
+        dirty = true;
+      }
+      if (dirty) {
+        await this.userRepository.save(existing);
+      }
+      return { user: existing, created: false };
+    }
+
+    const user = this.userRepository.create({
+      email: data.email,
+      fullName: data.fullName,
+      avatar: data.avatar,
+      // OAuth users don't have a password — use an unguessable random hash
+      // so the column is NOT NULL. They can still set one later via
+      // a "set password" flow if we add one.
+      password: await bcrypt.hash(randomUUID(), 12),
+    });
+    const saved = await this.userRepository.save(user);
+    return { user: saved, created: true };
   }
 
   async update(id: string, dto: UpdateUserDto): Promise<User> {

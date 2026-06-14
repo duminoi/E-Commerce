@@ -20,16 +20,19 @@ export function Header() {
   };
 
   const navItems = [
-    { path: ROUTES.PRODUCTS, label: 'Electronics' },
-    { path: '#', label: 'Fashion' },
-    { path: '#', label: 'Furniture' },
-    { path: '#', label: 'Accessories' },
-    { path: '#', label: 'Sale' },
+    { path: `${ROUTES.PRODUCTS}?category=electronics`, label: 'Electronics', categorySlug: 'electronics' },
+    { path: `${ROUTES.PRODUCTS}?category=fashion`, label: 'Fashion', categorySlug: 'fashion' },
+    { path: `${ROUTES.PRODUCTS}?category=furniture`, label: 'Furniture', categorySlug: 'furniture' },
+    { path: `${ROUTES.PRODUCTS}?category=accessories`, label: 'Accessories', categorySlug: 'accessories' },
+    { path: ROUTES.PRODUCTS, label: 'Sale', categorySlug: null },
   ];
 
-  const isNavActive = (path: string) => {
-    if (path === ROUTES.PRODUCTS) return location.pathname.startsWith('/products');
-    return false;
+  const isNavActive = (item: typeof navItems[number]) => {
+    if (!location.pathname.startsWith('/products')) return false;
+    const params = new URLSearchParams(location.search);
+    const currentCategory = params.get('category');
+    if (item.categorySlug === null) return !currentCategory;
+    return currentCategory === item.categorySlug;
   };
 
   return (
@@ -46,7 +49,7 @@ export function Header() {
 
           <nav className="hidden md:flex items-center gap-lg">
             {navItems.map((item) => {
-              const active = isNavActive(item.path);
+              const active = isNavActive(item);
               return (
                 <Link
                   key={item.label}

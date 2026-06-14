@@ -153,6 +153,50 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
+/* ========== Admin Surface (derived from Apex Commerce design system) ========== */
+/* Page wrapper: standard padding for admin content area */
+.admin-page {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* Glass card for stat / summary panels (Level 2 elevation) */
+.admin-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 20px;
+  box-shadow: 0px 4px 20px rgba(15, 23, 42, 0.05);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.admin-card.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 12px 32px rgba(15, 23, 42, 0.12);
+}
+
+/* Table card: glass surface wrapping tabular data */
+.admin-table-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 20px;
+  box-shadow: 0px 4px 20px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+}
+
+/* Admin sidebar: thicker glass tint for visual separation from content */
+.admin-sidebar {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-right: 1px solid rgba(195, 198, 215, 0.4);
+}
+
 /* ========== Hero ========== */
 .hero-pattern {
   background-image: radial-gradient(#E2E8F0 1px, transparent 1px);

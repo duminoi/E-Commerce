@@ -23,12 +23,13 @@ import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
 import redisConfig from './config/redis.config';
 import appConfig from './config/app.config';
+import googleConfig from './config/google.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, jwtConfig, redisConfig, appConfig],
+      load: [databaseConfig, jwtConfig, redisConfig, appConfig, googleConfig],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
